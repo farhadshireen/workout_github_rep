@@ -1,0 +1,77 @@
+<div>
+    <h1>{{ page.title}}</h1>
+    <div>
+        {{ page.content }}
+
+    </div>
+    <div>
+        {% assign  ValItem = "Hello test varItem" %}
+        {{ ValItem }} 
+{% assign num1 = 20 %}
+{% assign num2 = 30 %}
+Sum: {{ num1 |  plus: num2 }}
+minus: {{ num1 |  minus: num2 }}
+minus: {{ num2 |  minus: num1 }}
+divid_by: {{ num1 |  divided_by: num2 }}
+<br>
+multi : {{ num1 | times: num2 }}
+
+<br>
+{% if num1 > num2 %}
+    greather than {{ num1 }}
+    {% else %}
+        greather than {{ num2 }}
+{% endif %}
+<br>
+{% assign color = "blue" %}
+ {% case color %}
+    {% when "red" %}
+        color is red: {{ color }}
+        {% when "bluse" %}
+        color is blue: {{ color }}
+    {% else %}
+        color is not available
+ {% endcase %}
+ <br>
+{% for i in (1..10) %}
+    {% if i == 4 %}
+        {% continue %}
+    {% endif %}
+    {{ i }}
+{% endfor %}
+<br>
+{% for i in (1..14) %}
+    {% if forloop.first %}
+        forloopFirst <br>
+        {% elsif forloop.last %}
+            forloop index last<br>
+            {% else %}
+                other:{{ i }} <br>
+    {% endif %}
+{% endfor %}
+<br>
+<h1>Show all collection title</h1>
+{% for collection in collections  %}  
+    {{ collection.title }}<br>
+{% endfor %}
+<h1>Show product title</h1>
+  {% for product in collections.all.products %}
+    <p>{{ product.title }}</p>
+  {% endfor %}
+    </div><br>
+    <h1>Specific collection</h1>
+    {% for product in collections.all.products %}
+        {% for collection in product.collections %}
+            {% if collection.title == "Flower Seed" %}
+                {{ product.title |  collection.product |size}}<br>
+            {% endif %}
+    {% endfor %}
+    {% endfor %}
+    <h1>GitHub testing</h1>
+</div>
+<style>
+    h1{
+color:red;
+font-size: 40px;
+    }
+</style>
