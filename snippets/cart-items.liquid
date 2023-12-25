@@ -1,0 +1,26 @@
+<div class="cart-page-conatiner cart_item" data-key="{{ item.key }}">
+    <div class="item-conatiner">
+      
+      <div class="cart-items">
+          <img class="featured_img" src="{{ item.image | img_url: 'medium' }}">
+      </div>
+      <div class="quantity-container">
+        <div class="item title">
+            <h2 class="h2-item-title">{{ item.title }}</h2>
+        </div>
+      <div class="cart-quantity-selector">
+         <button type="button" class="minus">{% render 'minus-icon' %}</button>
+          <input name="updates[]" value="{{ item.quantity }}">
+          <button type="button" class="plus">{% render 'plus-icon' %}</button>
+      </div>
+
+      <div class="prict-items">
+        <h2 class="line-item-price">{{ item.final_line_price | money }}</h2>
+      </div>
+      <a class="remove-item" href="{{ item.url_to_remove }}">
+        Removes
+      </a>
+    </div>
+    
+    </div>
+    </div>

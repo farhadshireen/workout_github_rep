@@ -1,0 +1,74 @@
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "99466312-87cb-4b36-8263-a19b0616130f": {
+          "type": "title",
+          "settings": {}
+        },
+        "178c2e56-ed3c-4666-bdfc-731b5c6b53e4": {
+          "type": "price",
+          "settings": {}
+        },
+        "9c133144-c1ea-40fa-9edd-08fcf2446929": {
+          "type": "quantity",
+          "disabled": true,
+          "settings": {}
+        },
+        "ab2fd1f0-f8a1-410f-a915-20584797c23e": {
+          "type": "description",
+          "disabled": true,
+          "settings": {}
+        },
+        "573ff952-361e-409d-a0d1-e16c52d72825": {
+          "type": "saparator",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "99466312-87cb-4b36-8263-a19b0616130f",
+        "178c2e56-ed3c-4666-bdfc-731b5c6b53e4",
+        "9c133144-c1ea-40fa-9edd-08fcf2446929",
+        "ab2fd1f0-f8a1-410f-a915-20584797c23e",
+        "573ff952-361e-409d-a0d1-e16c52d72825"
+      ],
+      "settings": {
+        "color": "#ffffff"
+      }
+    },
+    "54b5ae1b-1ab4-4d9d-8a0e-c7c8c0a6c0f1": {
+      "type": "testing",
+      "blocks": {
+        "faf33036-6ca4-4b41-85f3-b02c8189cb34": {
+          "type": "metaValue",
+          "settings": {
+            "label": "{{ product.metafields.custom.row_value | metafield_text: field: 'row_label' }}",
+            "value": "{{ product.metafields.custom.row_value | metafield_text: field: 'row_value' }}"
+          }
+        },
+        "ef684d47-b28e-4e91-b2ec-3b135186004c": {
+          "type": "metaValue",
+          "settings": {
+            "label": "{{ product.metafields.custom.row_value | metafield_text: field: 'row_label' }}",
+            "value": "{{ product.metafields.custom.row_value | metafield_text: field: 'row_value' }}"
+          }
+        }
+      },
+      "block_order": [
+        "faf33036-6ca4-4b41-85f3-b02c8189cb34",
+        "ef684d47-b28e-4e91-b2ec-3b135186004c"
+      ],
+      "settings": {}
+    },
+    "remmendation": {
+      "type": "related-product",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "54b5ae1b-1ab4-4d9d-8a0e-c7c8c0a6c0f1",
+    "remmendation"
+  ]
+}

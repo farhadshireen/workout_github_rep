@@ -1,0 +1,74 @@
+
+<div class="cart_drawer">
+    <div class="cart-drawer-box">
+        <header class="cart-drawer-header">
+            <div class="cart-items-quantity">
+                <h2 class="cart_title">Your Cart</h2>
+            <div class="cart-icon-right">
+                <span>{{ cart.item_count }}items</span>
+                <buttton class="cart-close-icon" type="button">
+                    {% render 'crossIcons' %}
+                </buttton>
+            </div>
+            </div>
+        </header>
+            {% form 'cart', cart, class: "cart-drawer-form" %}
+                {% if cart.item_count == 0 %}
+                  <p class="cart-drawer-empty">your cart is empty</p>
+                {% else %}
+                <div class="cart-items-drawer">
+                {% for item in cart.items %}
+                   <div class="drawr-item" data-line-item-key="{{ item.key }}">
+                     <div class="cart-drawer-item-image">
+                       <img src="{{ item.image |  img_url: '200x' }}" alt="{{ item.title }}">
+                     </div>
+                <div class="cart-item-main">
+                    <div class="cart-main-flex">
+                        <h3>
+                        <a href="{{ item.url }}">{{ item.product.title }}</a>
+                        <a href="{{item.url_to_remove}}">Remove</a>
+                        </h3>
+                        <p class="item-variant">{{ item.variant.title }}</p>
+                        <div class="cart-drawer-quantity-selector">
+                            <button type="button" class="cart-drawer-minus minus_icon">-</button>
+                            <input name="quantity" value="{{ item.quantity }}">
+                            <button type="button" class="cart-drawer-plus plus_icon">+</button>
+                        </div> 
+                    </div> 
+                    <div class="line-item-price">
+                        <span>{{ item.final_line_price |  money }}</span>
+                    </div>
+                </div>
+    
+                    </div>
+                {% endfor %}
+                </div>
+                <footer class="cart_drawer_footer">
+                    {% if cart.total_discount > 1 %}
+                       <div class="cart-footer-row">
+                          <h3 class="discount-price">Discount</h3>
+                          <span>{{ cart.total_discount |  money}}</span>
+                       </div>
+                    {% endif %}
+       
+                   <div class="cart-footer-row">
+                       <h3 class="sub-total-price">Subtotal</h3>
+                       <span>{{ cart.total_price |  money }}</span>
+                   </div>
+                   <button class="checkout_btn" type="submit" name="checkout">Checkout</button>
+                </footer>
+
+               {% endif %}
+            {% endform  %}
+    </div>
+</div>
+
+   
+{% schema %}
+    {
+        "name": "Cart Drawer",
+        "settings": [
+            
+            ]
+    }
+    {% endschema %}

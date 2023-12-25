@@ -1,0 +1,166 @@
+<div class="footer">
+    {% assign copyright = section.settings.copyright %}
+    <div class="page-width">
+        <div class="navigation_column-container">
+            {% for block in section.blocks %}
+                {% if block.type == "navigation" %}
+                    <div class="footer-top footer_colunm_navigation" style="width:{{ block.settings.column-width }}%"> 
+                        <h2 class="h2-navigation-title foo-text">
+                          {{ block.settings.linklist.title }}
+                        </h2>
+                        <ul class="ul-foo">
+                            {% for link in block.settings.linklist.links %}
+                                <li class="li-foo">
+                                    <a class="li-foo-anchor foo-text" href="{{ link.url }}">{{ link.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% elsif block.type == "newsletter" %}
+                    <div class="footer-top footer_newsletter" style="width:{{ block.settings.column-width }}%">
+                        <h2 class="h2-navigation-title foo-text">
+                          {{ block.settings.text }}
+                        </h2>
+                        <div class="rte_content foo-text">
+                            {{ block.settings.richtext }}
+                        </div>
+                        <div class="newsletter_form">
+                            <input class="input_field" type="email" placeholder="Email address">
+                            <button class="newsletter_btn btn foo-text" type="submit">Subscribe</button>
+                        </div>
+                    </div>
+                {% elsif block.type == 'logo' %}
+                    <div class="footer-top footer_logo" style="width:{{ block.settings.column-width }}%">
+                        <div class="logo_container" style="width:{{ block.settings.logo-width }}px">
+                            {% if block.settings.logo != blank %}
+                                 <img src="{{ block.settings.logo | img_url: "master" }}">
+                            {% else %}
+                                <h2 class="foo-text">{{ shop.name }}</h2>
+                            {% endif %}
+                        </div>
+                        <div class="rte_content foo-text">
+                            {{ block.settings.richtext }}
+                        </div>
+                    </div>
+                {% endif %} 
+            {% endfor %}
+        </div>
+
+        <div class="footer_copyright">
+            <div class="copyright-container foo-text">
+                {{ copyright }}
+            </div>
+        </div>
+    </div>
+    
+</footer>
+<style>
+    .footer{
+        padding: 20px;
+        background-color: var(--footerBackground);
+    }
+    .foo-text{
+        color: var(--footerColor);
+    }
+    .logo_container {
+        /* width: {{ block.settings.logo-width }}px; */
+    }
+</style>
+
+{% schema  %} 
+{
+    "name": "Footer",
+    "settings": [
+        {
+            "type": "richtext",
+            "id": "copyright",
+            "label": "Text"
+        }
+    ],
+    "max_blocks": 5,
+    "blocks": [
+        {
+            "name": "Newsletter",
+            "type": "newsletter",
+            "settings": [ 
+                {
+                    "type": "text",
+                    "id": "text",
+                    "label": "Heading text"
+                },
+                {
+                    "type": "richtext",
+                    "id": "richtext",
+                    "label": "Body text"
+                },
+                {
+                    "type": "range",
+                    "id": "column-width",
+                    "label": "Column width",
+                    "default": 25,
+                    "max": 100,
+                    "min": 20,
+                    "step": 5,
+                    "unit": "%"
+                }
+            ]
+        },
+        {
+            "name": "Logo",
+            "type": "logo",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "column-width",
+                    "label": "Column width",
+                    "default": 25,
+                    "max": 100,
+                    "min": 20,
+                    "step": 5
+                },
+                {
+                    "type": "image_picker",
+                    "id": "logo",
+                    "label": "Logo"
+                },
+                {
+                    "type": "range",
+                    "id": "logo-width",
+                    "label": "Log0 width",
+                    "default": 80,
+                    "max": 280,
+                    "min": 40,
+                    "unit": "%",
+                    "step": 5
+                },
+                {
+                    "type": "richtext",
+                    "id": "richtext",
+                    "label": "Body text"
+                }
+            ]
+        },
+        {
+            "name": "Navigation column",
+            "type": "navigation",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "column-width",
+                    "label": "Column width",
+                    "default": 25,
+                    "max": 100,
+                    "min": 20,
+                    "unit": "%",
+                    "step": 5
+                },
+                {
+                    "type": "link_list",
+                    "id": "linklist",
+                    "label":"Navigation menu"
+                }
+            ]
+        }
+    ]
+}
+ {% endschema %}

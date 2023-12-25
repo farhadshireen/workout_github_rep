@@ -1,0 +1,24 @@
+<div id="thumbnailSlider" class="product-left">
+          <ul class="containerSlider product-image-thumbnail">
+            {% if product.selected_or_first_available_variant.featured_image %}
+              {% assign featured = product.selected_or_first_available_variant.featured_image %}
+              <img
+                id="product-image"
+                src="{{ featured | img_url: 'master' }}"
+                alt="800">
+            {% else %}
+              {% assign featured = product.featured_image %}
+              <img
+                id="product-image"
+                src="{{ featured | img_url: 'master'}}"
+                alt="1200">
+            {% endif %}
+            <ul class="product-thumbnail">
+              {% for image in product.images %}
+                <li class="li-product-variant {% if image == featured  %}selected{% endif %}">
+                  <img class="product-link light-box" src="{{ image.src | img_url: 'large' }}">
+                </li>
+              {% endfor %}
+            </ul>
+          </ul>
+        </div> 

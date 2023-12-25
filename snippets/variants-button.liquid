@@ -1,0 +1,35 @@
+<div class="product-form">
+        <input
+            type="hidden"
+            name="id"
+            id="product-id"
+            value="{{  product.selected_or_first_available_variant.id }}">
+        <div class="product-form">
+                {% if product.variants.size > 1 %}
+                  <div class="product-option">
+                    {% for option in product.options_with_values %}
+                      <fieldset>
+                        <legend>
+                          {{ option.name }}
+                        </legend>
+                        {% for value in option.values %}
+                          <div>
+                            <input
+                              {% if option.selected_value == value %}checked{% endif %}
+                              type="radio"
+                              value="{{ value }}"
+                              name="{{ option.name }}"
+                              form="{{ product_form_id }}"
+                              id="{{ option.name | handleize }}-{{ value }}">
+                            <label for="{{ option.name | handleize }}-{{ value }}">
+                              {{ value }}
+                            </label>
+                          </div>
+
+                        {% endfor %}
+                      </fieldset>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+            </div>
+</div>

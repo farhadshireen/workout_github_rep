@@ -1,0 +1,38 @@
+<div class="cart-conatiner" data-money-format="{{ shop.money_format }}">
+ <div class="page-width item-data">
+<h1>Cart</h1>
+{% form 'cart', cart %}
+  {% if cart.empty? %}
+    <p>Cart is empty</p>
+  {% else %}
+    {% for item in cart.items %}
+     {% render 'cart-items', item : item %}   
+    {% endfor %}
+  {% endif %}
+<div class="note_cart">
+    <label>Gift note:</label>
+    <textarea name="note"></textarea>
+</div>
+  <div class="total_items-container">
+    <h2>Discount Price: <strong id="total_discount">{{ cart.total_discounts }}</strong></h2>
+    <h2>Totale: <strong id="total_price">{{ cart.total_price | money }}</strong></h2> 
+      <div class="checkout-btn">
+        <button type="submit" name="checkout">Checkout</button>
+      </div>
+  </div>
+{% endform %}
+</div>
+</div>
+
+{% comment %} Axios ajax library  {% endcomment %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{{ 'cart.js' |  asset_url | script_tag }}
+
+{% schema %}
+{
+    "name": "Cart",
+    "settings": [
+        
+        ]
+}
+{% endschema %}

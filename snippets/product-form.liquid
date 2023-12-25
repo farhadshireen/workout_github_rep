@@ -1,0 +1,26 @@
+{% form 'product', product, id: form_id, class:'product-single-form' %}
+
+<button
+    {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+    id="addCart"
+    class="product-add"
+    type="submit">
+    {% if product.selected_or_first_available_variant.available %}
+    Add To Cart
+    {% else %}
+    Sold Out
+    {% endif %}
+</button>
+
+<button
+    {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+    id="buyNow"
+    class="buy-now"
+    type="submit">
+    {% if product.selected_or_first_available_variant.available %}
+    Buy Now
+    {% else %}
+    Sold Out
+    {% endif %}
+</button>
+{% endform %}

@@ -1,0 +1,58 @@
+{{ 'featured-collection.css' |  asset_url | stylesheet_tag }}
+<section class="featured-collection">
+  <div class="page-width">
+  <div class="section-title">
+    <h1 class="h1-title">{{ section.settings.text }}</h1>
+    </div>
+
+    <div class="featured-container">
+        {% assign collection =  collections[section.settings.collection] %}
+        {% assign available =  product.selected_or_first_available_variant.id %}
+        {% for product in collection.products limit : 8 %}
+          <div class="product-items">
+            <a href="{{ product.url }}">
+              <img src="{{ product.featured_image | img_url: '250x' }}">
+              <h1>{{ product.title }}</h1>
+              <h2>{{ product.price | money }}</h2>
+            </a>
+            <div class="featured-cart-conatiner">
+                <div class="featured-cart-btn">
+                <form method="post" action="/cart/add">
+                  <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+                  <input type="submit" value="Add to Cart" class="add-cart-btn">
+                </form>
+                </div>
+            </div>
+            
+          </div>  
+          {% else %} 
+           {% for i in (1..6) %}
+              <a href="#" class="featured-collection-item featured_items">
+                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+                <p>Alfa</p>
+                <p>{{ 1999 | money }}</p>
+              </a>
+            {% endfor %}
+        {% endfor %}
+        </div>     
+    </div>
+</section>
+{%  schema  %} 
+{
+  "name":"Featured Product",
+  "settings":[
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Collection Title",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label":"Select Collection"
+    }
+  ]
+}
+{% endschema %} 

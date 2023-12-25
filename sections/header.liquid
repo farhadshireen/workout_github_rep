@@ -1,0 +1,171 @@
+<header class="main-header">
+   {% assign alignment_items = section.settings.alignment_item %}
+  <div class="header-wrapper page-width">
+<div class="alignment-flex-container {% if alignment_items == "center"%}center_items{% endif %}
+{% if alignment_items =="middle" %}logo_center{% endif %}{% if alignment_items =="left" %}left{% endif %}
+{% if alignment_items =="menu"%}block_menu{% endif %}">
+   <div class="header_logo-width">
+      <a class="logo-link " href="{{routes.root_url}}">
+    {% if section.settings.logo != blank %}
+      <img class="shop_logo" src="{{ section.settings.logo |  img_url: 'medium' }}" alt="{{ section.setting.logo.alt }}">
+    {% else %}
+       <h1 class="shop_title txt-color">{{ shop.name }}</h1>
+    {% endif %}
+    </a>
+  </div> 
+   
+
+  <!-- Main menu -->
+   <ul class="ul-navigation">
+    {% for link in section.settings.navigation.links -%}
+      <li class="header-nav-item">
+        <a class="header-nav-anchor nav-text" href="{{ link.url }}"> 
+          {{ link.title }}
+          </a>
+          {% if link.links !=blank %}
+            <ul class="header-sub-nav nav-ul-item">
+              {% for child in link.links %}
+                <li class="header-sub-item">
+                <a class="header-sub-anchor nav-text" href="{{ child.url }}">{{ child.title }}</a>
+
+              {% if child.links.size > 0 %}
+                <ul class="header-dropdown">
+                  {% for grandchild in child.links %}
+                    <li class="header-inner-item">
+                    <a class="header-nav-anchor anchor_items" href="{{ grandchild.url }}">{{ grandchild.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </li>
+    {%- endfor %}
+  </ul>
+  </div>
+  <!-- hamburger -->
+<button class="header_hamburgar">
+  <span class="header_hamburgar_line"></span>
+  <span class="header_hamburgar_line"></span>
+  <span class="header_hamburgar_line"></span>
+</button>
+<div class="header-icon-containers">
+   {% comment %}
+    {% render 'search' %}
+  {% endcomment %}
+  <ul class="cart_icons">
+    <li class="li-cart-icon">
+      <a class="header-cart" href="/cart">
+      {% render 'cart-icon' %}
+      <span class="cart-item-count">{{ cart.item_count }}</span>
+      </a>
+    </li>
+  </ul>
+</div>
+  
+  </div>
+</header>
+<div class="header-nav-overlay"></div>
+<style>
+  .header{
+    padding: {{ section.settings.padding }}px 0;
+    background-color:{{ section.settings.bg-color }};
+  }
+  .nav-text{
+    color: {{ section.settings.txt-color }};
+  }
+  .shop_title, .header_logo-width{
+    max-width: {{ section.settings.logo-width }}px;
+  }
+  .header-cart svg{
+    fill:{{ section.settings.txt-color }};
+  }
+  </style>
+
+<script>
+  document.querySelector('.header_hamburgar').addEventListener('click', () =>{
+    document.querySelector('.header').classList.toggle("nav-active");
+  })
+  document.querySelector(".header-nav-overlay").addEventListener('click', () =>{
+    document.querySelector('.header').classList.remove('nav-active');
+  })
+</script>
+
+{% schema  %} 
+{
+  "name":"Header",
+  "tag": "header",
+  "class": "header",
+  "settings": [
+    {
+      "type": "color",
+      "id": "txt-color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "bg-color",
+      "label":"Background color",
+      "default": "#000000"
+    },
+    {
+      "type":"range",
+      "id": "padding",
+      "label": "Height",
+      "min": 5,
+      "max": 80,
+      "step": 5,
+      "default": 10 
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    { 
+      "type": "range",
+      "id": "logo-width",
+      "label": "Logo width",
+      "default": 120,
+      "min": 30,
+      "max": 250,
+      "step": 5
+    },
+    {
+      "type": "link_list",
+      "id": "navigation",
+      "label": "navigation menu",
+      "default": "main-menu"
+    },
+    {
+      "type":"select",
+      "id": "alignment_item",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "center",
+          "label": "Logo left menu Center"
+        },
+        {
+          "value": "middle",
+          "label":"Logo center menu left"
+        },
+        {
+          "value": "left",
+          "label": "Logo left menu left"
+        },
+        {
+          "value":"menu",
+          "label":"menu full width"
+        }
+      ],
+      "default": "center"
+    }
+   
+  ]
+  
+}
+{% endschema %}

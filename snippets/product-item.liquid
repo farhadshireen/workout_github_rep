@@ -1,0 +1,9 @@
+  <a class="featured-media-url" href="{{ product.url }}">
+    <div class="featured-media">
+      <img src="{{ product.featured_image | img_url: '250x' }}">
+    </div>
+    <div class="product-decription">
+      <h1>{{ product.title }}</h1>
+      <h2>{{ product.price | money }}</h2>
+    </div>
+  </a>

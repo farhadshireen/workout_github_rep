@@ -1,0 +1,10 @@
+<div class="list-collection">
+{% for collection in collections %}
+    <div class="list_items-container">
+      <a class="list-link" href="{{ collection.url }}">
+       <img class="collection-featured-image" src="{{collection.image |  img_url: 'master'}}" width="100" height="100">
+        <h1 class="list-title">{{ collection.title }}</h1>
+      </a>
+    </div>
+  {% endfor %}
+  </div>

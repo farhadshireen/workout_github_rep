@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "featuredCollection": {
+      "type": "featured-collection",
+      "settings": {
+        "text": "Featured Collection",
+        "collection": "herb-seed"
+      }
+    }
+  },
+  "order": [
+    "featuredCollection"
+  ]
+}

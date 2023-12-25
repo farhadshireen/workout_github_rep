@@ -1,0 +1,38 @@
+<div class="cart_page">
+  <div class="cart_width">
+    <h1>Cart</h1>
+    {% form 'cart', cart %}
+      {% if cart.empty? %}
+        <div class="empty-cart">
+          <p>Cart is empty</p>
+          <a class="btn_a" href="/">Keep shipping</a>
+        </div>
+      {% else %}
+        {% for item in cart.items %}
+          {% render 'cart-item', item: item %}
+        {% endfor %}
+
+        <div class="text-note">
+          <label>Gift note:</label>
+          <textarea placeholder="Add special instruction" name="note"></textarea>
+        </div>
+
+        <div class="total-cart-price">
+          <p class="discount-price">Total Discount:<strong>{{ cart.total_discount | money }}</strong>
+          </p>
+          <p>Total:
+            <strong>{{ cart.total_price | money }}</strong>
+          </p>
+        </div>
+        <div class="btn-update">
+          <button type="submit" name="update">Update</button>
+        </div>
+        <div class="btn-check">
+          <button type="submit" name="checkout">Checkout</button>
+        </div>
+
+      {% endif %}
+    {% endform %}
+
+  </div>
+</div>

@@ -1,0 +1,166 @@
+{{ 'product-page.css' |  asset_url |  stylesheet_tag }}
+
+<div class="product">
+  <di class="page-width">
+    <div class="product-grid-partial">
+
+      <div class="product-grid-item">
+        <div id="" class="product-left">
+            
+          {% if product.selected_or_first_available_variant.featured_image  %}
+            {% assign featured = product.selected_or_first_available_variant.featured_image %}
+              <img id="product-image" src="{{ featured |  image_url }}" alt="">
+          {% else %}
+               {% assign featured = product.featured_image %}
+              <img id="product-image" src="{{ featured |  image_url  }}" alt=""> 
+          {% endif %} 
+        <ul class="product-image-thumbs">
+          {% for image in product.images %}
+            <li class="{% if image == featured  %}selected{% endif %}">  
+                <img
+                  src="{{ image | image_url: master }}"
+                  class="featured-image"
+                  alt="{{ image.alt }}">
+            </li>
+          {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="product-grid-item">
+        <div class="product-grid">
+          <h1>{{ product.title }}</h1>
+
+        <div class="product_price">
+        <p class="compare_price {% unless product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}hide{% endunless %}">
+          {{ product.selected_or_first_available_variant.compare_at_price | money }}
+        </p>
+            <p class="price">{{ product.selected_or_first_available_variant.price | money }}</p> 
+        </div>
+
+          <div class="prduct-description"> 
+            <p>{{ product.description }}</p>
+          </div>
+
+          <div class="product-form">
+            {% form 'product', product %}
+              <div class="product-form">
+                <input
+                  type="hidden"
+                  id="product-id"
+                  name="id"
+                  value="{{  product.selected_or_first_available_variant.id }}">
+                {% if product.variants.size > 1 %}
+                  <div class="product-option">
+                    {% for option in product.options_with_values %}
+                      <fieldset>
+                        <legend>
+                          {{ option.name }}
+                        </legend>
+                        {% for value in option.values %}
+                          <div>
+                            <input
+                              {% if option.selected_value == value %}checked{% endif %}
+                              type="radio"
+                              value="{{ value }}"
+                              name="{{ option.name }}"
+                              id="{{ option.name | handleize }}-{{ value }}">
+                            <label for="{{ option.name | handleize }}-{{ value }}">
+                              {{ value }}
+                            </label>
+                          </div>
+
+                        {% endfor %}
+                      </fieldset>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+
+                <div class="product-qty">
+                  <label for="quantity">Quantity</label>
+                  <input
+                    type="number"
+                    min="1"
+                    id="quantity"
+                    name="quantity"
+                    value="1">
+                </div>
+              <button {% unless product.selected_or_first_available_variant.available  %}disabled{% endunless  %} class="product-add" type="submit">
+                {% if product.selected_or_first_available_variant.available  %}     
+                    Add To Cart
+                {% else %}
+                    Sold Out       
+                {% endif  %}               
+                </button>
+              </div>
+            {% endform %} 
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</di>
+
+<script>
+  var product = {{ product |  json }}
+  document.querySelectorAll('.product-form input[type=radio]').forEach(radio =>{
+    radio.addEventListener('change', () =>{
+      // Selected option
+      var selectedOpt = [];
+      document.querySelectorAll('.product-form input[type=radio]:checked').forEach(radio =>{
+            selectedOpt.push(radio.value);
+      });
+      // Finding match variant
+      var matchVariant = product.variants.find(variant =>{
+        var pass = true;
+        for(var i=0; i<selectedOpt.length; i++){
+          if(selectedOpt.indexOf(variant.options[i]) === -1){
+            pass = false
+            break
+          }
+        }
+        return pass
+      })
+      // Change product form variant id 
+      document.querySelector('#product-id').value = matchVariant.id;
+      const url = new URLParse(window.location.href, true)
+      url.query.variant = matchVariant.id; 
+      window.history.replaceState(null, null, url.toString()); 
+
+      // change prices
+      document.querySelector('.compare_price').textContent = formatMoney(matchVariant.compare_at_price, "{{ shop.money_format }}")
+      document.querySelector('.price').textContent = formatMoney(matchVariant.price, "{{ shop.money_format }}")
+      
+      matchVariant.compare_at_price > matchVariant.price ? document.querySelector('.compare_price').classList.remove('hide') :
+      document.querySelector('.compare_price').classList.add('hide');
+
+      // change image click by variant
+      if(matchVariant.featured_image){
+        document.querySelector('#product-image').setAttribute('src', matchVariant.featured_image.src);
+        // document.querySelector('.product-image-thumbs li.selected').classList.remove('selected');
+        // document.querySelectorAll(".product.image-thumbs li")[matchVariant.featured_image.position - 1].classList.add('selected');
+      }
+ 
+    });
+  });   
+
+document.querySelectorAll(".product-image-thumbs li").forEach(li =>{
+    li.addEventListener('click', () =>{
+    document.querySelector('.product-image-thumbs li.selected').classList.remove('selected')
+    li.classList.add('selected') 
+    document.querySelector('#product-image').setAttribute('src', li.querySelector('img').getAttribute('src'));
+    });
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Product",
+    "presets": [
+      {
+        "name": "Product"
+      }
+    ]
+  }
+{% endschema %}

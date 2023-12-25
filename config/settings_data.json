@@ -1,0 +1,89 @@
+{
+  "current": {
+    "page-width": 1200,
+    "background-color": "#080808",
+    "color": "#ffffff",
+    "medium_color": "#f5f5f5",
+    "border_color": "#f5f5f5",
+    "foo-color": "#ffffff",
+    "foo-bg": "#131313",
+    "Color": "#ffffff",
+    "bg_color": "#ffffff",
+    "txt_color": "#060606",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "txt-color": "#ffffff",
+          "bg-color": "#000000",
+          "padding": 10,
+          "logo": "shopify:\/\/shop_images\/job331-eye-02.png",
+          "logo-width": 175,
+          "navigation": "header",
+          "alignment_item": "center"
+        }
+      },
+      "featured-collection": {
+        "type": "featured-collection",
+        "settings": {
+          "text": "Featured Collection",
+          "collection": "best-items"
+        }
+      },
+      "list-collection": {
+        "type": "list-collection",
+        "settings": {}
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "653f4b26-f607-44ac-8421-5182afd3e671": {
+            "type": "logo",
+            "settings": {
+              "column-width": 25,
+              "logo": "shopify:\/\/shop_images\/job331-eye-02.png",
+              "logo-width": 180,
+              "richtext": "<p>Get<strong>15% off everything<\/strong>in your first order,<strong>early access<\/strong>to our sales and new collections,<strong>VIP<\/strong>offers, behind the scenes actions and more.<\/p>"
+            }
+          },
+          "79899a0a-7289-4471-a574-c8d1b4f83416": {
+            "type": "navigation",
+            "settings": {
+              "column-width": 25,
+              "linklist": "footer-menu"
+            }
+          },
+          "b3fdd5b9-3279-457b-be0d-75a9a29a202e": {
+            "type": "navigation",
+            "settings": {
+              "column-width": 25,
+              "linklist": "main-menu"
+            }
+          },
+          "2e2aca02-02c3-4149-8479-fa571b4872c5": {
+            "type": "newsletter",
+            "settings": {
+              "text": "NEWSLETTER",
+              "richtext": "<p>Get<strong>15% off everything <\/strong>in your first order,<strong>early access <\/strong>to our sales and new collections,<strong>VIP<\/strong>offers, behind the scenes actions and more.<\/p>",
+              "column-width": 25
+            }
+          }
+        },
+        "block_order": [
+          "653f4b26-f607-44ac-8421-5182afd3e671",
+          "79899a0a-7289-4471-a574-c8d1b4f83416",
+          "b3fdd5b9-3279-457b-be0d-75a9a29a202e",
+          "2e2aca02-02c3-4149-8479-fa571b4872c5"
+        ],
+        "settings": {
+          "copyright": "<p>2023 copyright<\/p>"
+        }
+      }
+    },
+    "content_for_index": []
+  }
+}

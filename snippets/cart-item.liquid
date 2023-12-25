@@ -1,0 +1,29 @@
+<div class="cart-item" data-key="{{ items.key }}">
+  <div class="Cart__HeadItem cart-item-img">
+    <img src="{{ item.image | img_url: '150x' }}">
+  </div>
+  <div class="Cart__HeadItem cart-item-title">
+    <h3>{{ item.product.title }}</h2>
+    {% if item.variant.title != "Default Title" %}
+      <p class="item-variant-title">{{ item.variant.title }}</p>
+    {% endif %}
+  </div>
+
+  <div class="Cart__HeadItem cart-item-quantity">
+    <div class="cart-quantity-selector">
+      <button type="button" class="btn-minus btn">-</button>
+      <input
+        class="input-update"
+        name="updates[]"
+        value="{{ item.quantity }}">
+      <button type="button" class="btn-plus btn">+</button>
+    </div>
+    <div class="cart-item-remove">
+      <a class="minus-btn" href="{{ item.url_to_remove }}">Removes</a>
+    </div>
+  </div>
+
+  <div class="Cart__HeadItem cart-item-total">
+    <span>{{ item.final_line_price | money }}</span>
+  </div>
+</div>

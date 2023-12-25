@@ -1,0 +1,105 @@
+
+  {%- if paginate.pages > 1 -%}
+    <nav role="navigation">
+      <ol class="pagination">
+        {%- if paginate.previous-%}
+          <li class="li_previous_pageination">
+            <a class="previous_pagination_url" href="{{ paginate.previous.url }}">
+              <span aria-hidden="true">&laquo;</span>
+              Previous <span class="visuallyhidden">page</span>
+            </a>
+          </li>
+        {%- else -%}
+          <li class="disabled">
+            <span aria-hidden="true">&laquo;</span>
+            Previous <span class="visuallyhidden">page</span>
+          </li>
+        {%- endif -%}
+
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <li>
+              <a href="{{ part.url }}">
+                <span class="visuallyhidden">page</span> {{ part.title }}
+              </a>
+            </li>
+          {%- else -%}
+            {%- if part.title == paginate.current_page -%}
+              <li class="active" aria-current="page">
+                <span class="visuallyhidden">page</span> {{ part.title }}
+              </li>
+            {%- else -%}
+              <li>
+                <span class="visuallyhidden">page</span> {{ part.title }}
+              </li>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if paginate.next -%}
+          <li class="li_next_pagination">
+            <a class="next_pagination_url" href="{{ paginate.next.url }}">
+              Next <span class="visuallyhidden">page</span>
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {%- else -%}
+          <li class="disabled">
+            Next <span class="visuallyhidden">page</span>
+            <span aria-hidden="true">&raquo;</span>
+          </li>
+        {%- endif -%}
+      </ol>
+    </nav>
+  {%- endif -%}
+
+<style>
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+  
+.pagination li {
+  display: inline; 
+  margin: 0 5px;
+}
+
+.load_more_product {
+    text-align: center;
+    padding: 40px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+a.load_more_button {
+    border: 1px solid;
+    padding: 10px;
+}
+
+.load_more_spinner {
+    height: 35px;
+    width: 35px;
+    border: 4px solid #bbb9b9;
+    border-radius: 50%;
+    border-top: 4px solid black;
+    margin-left: 0;
+    margin-right: 0;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin{
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+</style>

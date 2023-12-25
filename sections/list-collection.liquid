@@ -1,0 +1,17 @@
+{{ 'collection.css'|  asset_url |  stylesheet_tag }}
+<div class="list-collection">
+    <div class="page-width">
+        <h1>Collection</h1>
+        <div class="list-collection-container">
+           {% render 'collection-grid-item' %}
+        </div>
+    </div>
+</div>
+{% schema %}
+{
+    "name": "List collection",
+    "settings": [
+      
+        ] 
+}
+{% endschema %}

@@ -1,0 +1,77 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Pakhtoon_kha",
+    "theme_author": "Farhad Shireen",
+    "theme_version": "7.0.1",
+    "theme_support_email": "mrfarhad032@gmail.com",
+    "theme_documentation_url": "https:\/\/www.youtube.com\/watch?v=zCDo-l5DJSo"
+  },
+  {
+    "name": "Page settings",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page-width",
+        "label": "Page width",
+        "default": 1200,
+        "max": 1600,
+        "min": 800,
+        "step": 50
+      }
+    ]
+  },
+  {
+    "name": "color",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Header color"
+      },
+      {
+        "type": "color",
+        "id": "background-color",
+        "label": "Background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Text color",
+        "default": "#111111"
+      },
+      {
+        "type": "header",
+        "content": "Medium color"
+      },
+      {
+        "type": "color",
+        "id": "medium_color",
+        "label": "Medium text color",
+        "default": "#5e5e5e"
+      },
+      {
+        "type": "color",
+        "id": "border_color",
+        "label": "Border color",
+        "default": "#dddddd"
+      },
+      {
+        "type": "header",
+        "content": "Footer color"
+      },
+      {
+        "type": "color",
+        "id": "foo-color",
+        "label": "Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "foo-bg",
+        "label": "Background color",
+        "default": "#ffffff"
+      }
+    ]
+  }
+]

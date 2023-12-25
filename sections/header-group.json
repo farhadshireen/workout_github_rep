@@ -1,0 +1,26 @@
+{
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "txt-color": "#ffffff",
+        "bg-color": "#000000",
+        "padding": 10,
+        "logo": "shopify:\/\/shop_images\/job331-eye-02.png",
+        "logo-width": 135,
+        "navigation": "main-menu",
+        "alignment_item": "center"
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "header"
+  ]
+}

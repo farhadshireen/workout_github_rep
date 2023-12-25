@@ -1,0 +1,199 @@
+{{ 'collection-page.css' |  asset_url |  stylesheet_tag }}
+<div class="collection" style="padding-top: {{ section.settings.padding-top }}px; padding-bottom:{{ section.settings.padding-bottom }}px">
+    <div class="page-width">
+        <div class="collection_container">
+          {% if section.settings.enableFilter %}
+            <div class="filter-container">
+              <form class="filter-form">
+                {% for filter in collection.filters %}
+                  <div class="filterWrapper">
+                    <div class="filter-label">
+                      <span>{{ filter.label }}</span>
+                      {% if filter.active_values.size > 0 %}
+                        <a href="{{filter.url_to_remove}}" class="filter-group-header-display-reset">X</a>
+                      {% endif %}
+                      </div>
+                      <!-- ________________ Custom filter ________________ --> 
+                      {% case filter.type %}
+                        {% when "price_range" %}
+                          <div class="display-group-price-range">
+                            <div class="display-group-price-range-from">
+                              <span>{{ cart.currency.symbol }}</span>
+                              <input type="number" 
+                                    name="{{ filter.min_value.param_name }}" 
+                                    id="{{ filter.min_value.param_name }}"
+                                    min="0"
+                                    placeholder="0"
+                                    max="{{ filter.range_max |money_without_currency }}"
+                                    {% if filter.min_value.value %}
+                                      value="{{ filter.min_value.value |money_without_currency | replace: ',', ''}}"
+                                    {% endif %} 
+                              >
+                            </div>
+                            <div class="display-group-price-range-to">
+                              <span>{{ cart.currency.symbol }}</span>
+                              <input type="number"
+                                    name="{{ filter.max_value.param_name }}" 
+                                    id="{{ filter.max_value.param_name }}"
+                                    min="0"
+                                    placeholder="{{ filter.range_max |  money_without_currency }}"
+                                    max="{{ filter.range_max |money_without_currency }}"
+                                    {% if filter.value %}
+                                      value="{{ filter.max_value.value |money_without_currency | replace: ',', ''}}"
+                                    {% endif %}
+                              >
+                            </div>
+                            <div class="submit-button">
+                               <input class="input-button" type="submit" value="Apply">
+                            </div>
+                          </div>
+                          
+                        {% else %}
+                          <ul class="filter-display-group-list">
+                            {% for filter_value in filter.values %}
+                              <li class="filter-display-group-list-li">
+                                <input type="checkbox"
+                                      name="{{ filter_value.param_name }}" 
+                                      value="{{ filter_value.value }}"
+                                      id="filter-{{ filter_value.param_name }}-{{ forloop.index }}"
+                                      {% if filter_value.active %} checked{% endif %}
+                                        {% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}> 
+                                  <label for="filter-{{ filter_value.param_name }}-{{ forloop.index }}">{{ filter_value.label }}</label>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                          <div class="submit-button">
+                               <input class="input-button" type="submit" value="Apply">
+                            </div>
+                      {% endcase %}
+                  </div>
+                {% endfor %}
+              </form>
+            </div>
+          {% endif %}
+          <div class="collection_page_content">
+              <div class="collection-title">
+                <h1>{{ collection.title }}</h1>
+              </div>
+          <div class="sort_container">
+              <select id="sort-by">
+                {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+                {% for option in collection.sort_options %}
+                    <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+                      {{ option.name }}
+                    </option>
+                {% endfor %}
+              </select>
+           </div>
+            {% paginate collection.products by 5 %}
+              <ul data-next-url="{{ paginate.next.url }}" class="ul-featured-product"> 
+                {% for product in collection.products %}
+                  <li class="li-featured-product">
+                      {% render 'product-item' product: product %}
+                  </li>
+                {% endfor %}
+              </ul>
+
+              <div class="load_more_product">
+                <a class="load_more_button" onclick="loadMore()">Load More</a>
+                <div class="load_more_spinner"></div>
+              </div> 
+            {% render "pagination", paginate:paginate %} 
+          {% endpaginate %}     
+      </div>
+    </div>    
+  </div>
+</div>
+
+<style>
+.load_more_spinner {
+  display:none;
+}
+</style>
+<script>
+  Shopify.queryParams = {};
+
+  // Preserve existing query parameters
+  if (location.search.length) {
+    var params = location.search.substr(1).split('&');
+
+    for (var i = 0; i < params.length; i++) {
+      var keyValue = params[i].split('=');
+
+      if (keyValue.length) {
+        Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+      }
+    }
+  }
+
+  // Update sort_by query parameter on select change
+  document.querySelector('#sort-by').addEventListener('change', function(e) {
+    var value = e.target.value;  
+    Shopify.queryParams.sort_by = value;
+    location.search = new URLSearchParams(Shopify.queryParams).toString();
+  });
+</script>
+
+<script>
+     var ul_featured_product =$('.ul-featured-product');
+     var next_url = ul_featured_product.data('next-url');
+      var loadmore_btn = $('.load_more_button');
+      var spinner = $('.load_more_spinner');
+
+     function loadMore(){
+     $.ajax({
+             url:next_url,
+             type:"GET",
+             dataType:"html",
+             beforeSend:function(){
+              loadmore_btn.hide();
+              spinner.show();
+             }
+             }
+     ).done(function(next_page){
+        
+          spinner.hide();
+         var new_product =$(next_page).find('.ul-featured-product');      
+         var new_url = new_product.data('next-url');
+
+         if(new_url)
+          loadmore_btn.show();
+
+         next_url = new_url; 
+         ul_featured_product.append(new_product.html());
+     })
+     }
+  </script>
+  {% schema %}
+  {
+    "name": "Collection",
+    "settings": [
+      {
+        "type":"range",
+        "id": "padding-top",
+        "label":"Padding top",
+        "max": 80,
+        "min": 20,
+        "step": 5,
+        "default": 20,
+        "unit": "px" 
+      },
+      {
+        "type":"range",
+        "id": "padding-bottom",
+        "label":"Padding bottom",
+        "max": 80,
+        "min": 20,
+        "step": 5,
+        "default": 20,
+        "unit": "px" 
+      },
+      {
+        "type":"checkbox",
+        "id": "enableFilter",
+        "label": "Enable Filter",
+        "default": true 
+      }
+      ]
+  }
+  {% endschema %}
